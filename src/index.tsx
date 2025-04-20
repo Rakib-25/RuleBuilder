@@ -1,15 +1,9 @@
 import ReactDOM from 'react-dom';
-import GuestList from './state/GuestList';
+import ImprovedRuleBuilder from './components/improved_rule_builder'; // Adjusted the path to match the correct location
 
-const App = () => {
-  return (
-    <div>
-      <GuestList/>
-    </div>
-  );
-};
+// import './styles/basic.css';
+ // Adjust path based on your file location // Adjusted the path to match the correct location
 
+ import './index.css';
 
-
-
-ReactDOM.render(<App />, document.querySelector('#root'));
+ReactDOM.render(<ImprovedRuleBuilder />, document.querySelector('#root'));
