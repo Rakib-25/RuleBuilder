@@ -44,8 +44,9 @@ const updateTree = (
         const newCondition: Condition = {
           id: uuidv4(),
           category: 'Patient',
-          field: 'PatientName',
+          operand: 'PatientName',
           operator: 'EQUALS',
+          rules:'load on MRP',
           value: ''
         };
   

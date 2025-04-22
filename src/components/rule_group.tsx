@@ -13,7 +13,7 @@ const RuleGroupComponent = ({
   onUpdateGroupOperator,
   onDeleteChild,
   level = 0
-}: {
+}:{
   group: RuleGroup;
   onAddCondition: (parentId: string) => void;
   onAddGroup: (parentId: string) => void;

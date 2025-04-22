@@ -1,8 +1,9 @@
 type Condition = {
     id: string;
     category: string;
-    field: string;
+    operand: string;
     operator: string;
+    rules:string;
     value: string;
   };
   

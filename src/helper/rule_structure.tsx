@@ -17,7 +17,7 @@ export const generateRuleStructure = (group: RuleGroup): string[] => {
       const condition = item as Condition;
       result.push(
         condition.category,
-        condition.field,
+        condition.operand,
         condition.operator,
         condition.value
       );

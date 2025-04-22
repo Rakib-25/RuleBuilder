@@ -1,6 +1,18 @@
-import { Condition } from "../types/interfaces";
-import { Trash2 } from "lucide-react";
+// import { Condition } from "../types/interfaces";
+import { Percent, Trash2 } from "lucide-react";
 import { categories, fieldsByCategory, operators } from "./constant";
+
+
+
+type Condition = {
+  id: string;
+  category: string;
+  operand: string;
+  operator: string;
+  rules:string;
+  operator2:string;
+  value: string;
+};
 
 // Condition Component
 const ConditionComponent = ({
@@ -27,17 +39,7 @@ const ConditionComponent = ({
             <option key={category} value={category}>{category}</option>
           ))}
         </select>
-        
-        <select
-          className="p-2 border border-gray-300 rounded-md bg-white"
-          value={condition.field}
-          onChange={(e) => onUpdate(condition.id, { field: e.target.value })}
-        >
-          {availableFields.map(field => (
-            <option key={field} value={field}>{field}</option>
-          ))}
-        </select>
-        
+
         <select
           className="p-2 border border-gray-300 rounded-md bg-white"
           value={condition.operator}
@@ -47,14 +49,55 @@ const ConditionComponent = ({
             <option key={op} value={op}>{op.replace('_', ' ')}</option>
           ))}
         </select>
+        <select
+          className="p-2 border border-gray-300 rounded-md bg-white"
+          value={condition.operand}
+          onChange={(e) => onUpdate(condition.id, { operand: e.target.value })}
+        >
+            <option>MRP</option>
+            <option>HMRP</option>
+            <option>Hire Cash</option>
+            <option>Hire Outstanding</option>
+            <option>Hire Value</option>
+        </select>
+
+        <select
+          className="p-2 border border-gray-300 rounded-md bg-white"
+          value={condition.operator2}
+          onChange={(e) => onUpdate(condition.id, { operator2: e.target.value })}
+        >
+            <option>Add</option>
+            <option>Substract</option>
+            <option>Multiply</option>
+            <option>Devide by</option>
+        </select>
         
-        <input
-          type="text"
-          className="p-2 border border-gray-300 rounded-md flex-grow"
-          value={condition.value || ''}
-          onChange={(e) => onUpdate(condition.id, { value: e.target.value })}
-          placeholder="Value"
-        />
+        <select
+          className="p-2 border border-gray-300 rounded-md bg-white"
+          value={condition.rules}
+          onChange={(e) => onUpdate(condition.id, { rules: e.target.value })}
+        >
+        
+          {availableFields.map(field => (
+            <option key={field} value={field}>{field}</option>
+          ))}
+        </select>
+
+
+        
+
+        
+        <div className="flex items-center">
+          <input
+            type="text"
+            className="p-2 border border-gray-300 rounded-md flex-grow"
+            value={condition.value || ''}
+            onChange={(e) => onUpdate(condition.id, { value: e.target.value })}
+            placeholder="Value"
+          />
+          <Percent size={19} className="ml-2" />
+        </div>
+
         
         {onDelete && (
           <button 

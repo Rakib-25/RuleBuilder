@@ -105,9 +105,10 @@ export default function ImprovedRuleBuilder() {
   const addCondition = (parentId: string) => {
     const newCondition: Condition = {
       id: generateId(),
-      category: 'Patient',
-      field: 'PatientName',
+      category: 'Hire Cash',
+      operand: 'MRP',
       operator: 'EQUALS',
+      rules:'Load ON MRP',
       value: ''
     };
     

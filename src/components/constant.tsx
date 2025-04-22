@@ -1,9 +1,9 @@
 // Mock data for demonstration
-export const categories = ['Patient', 'Visit', 'Diagnosis'];
+export const categories = ['Hire cash Value', 'HMRP', 'Hire Outstanding', 'Hire value'];
 export const fieldsByCategory = {
-  'Patient': ['PatientName', 'Age', 'Gender', 'DOB'],
-  'Visit': ['VisitDate', 'Department', 'Provider'],
-  'Diagnosis': ['Code', 'Description', 'Severity']
+  'Hire cash Value': ['Load ON MRP', 'Load ON HMRP', 'Load ON Hire cash value', 'Load ON Hire Value'],
+  'HMRP': ['Load ON MRP', 'Load ON HMRP', 'Load ON Hire cash value', 'Load ON Hire Value'],
+  'Hire Outstanding': ['Load ON MRP', 'Load ON HMRP', 'Load ON Hire cash value', 'Load ON Hire Value']
 };
 
 
