@@ -34,10 +34,6 @@ const HireSellPolicy: React.FC = () => {
 
 
 
-
-
-
-
     const handleTypeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedType(event.target.value);
     };

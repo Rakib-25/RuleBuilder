@@ -1,31 +1,33 @@
 import { useState } from 'react';
-import { RuleGroup, Condition, RuleElement, isRuleGroup, ensureArray } from '../types/interfaces';
+import { RuleGroup,  isRuleGroup, ensureArray } from '../types/interfaces';
+import { Condition } from '../components/condition';
 import RuleGroupComponent from './rule_group'; 
 import { Copy } from 'lucide-react'; 
 
+
 // Function to convert rule to JSON format (removing IDs)
 const generateRuleJSON = (group: RuleGroup) => {
-    const convertGroup = (g: RuleGroup): any => {
-      const result: any = {
-        operator: g.operator,
-        rules: []
-      };
-      
-      ensureArray(g.children).forEach(child => {
-        if (isRuleGroup(child)) {
-          result.rules.push(convertGroup(child));
-        } else {
-          // For conditions, exclude the ID field
-          const { id, ...conditionWithoutId } = child;
-          result.rules.push(conditionWithoutId);
-        }
-      });
-      
-      return result;
+  const convertGroup = (g: RuleGroup): any => {
+    const result: any = {
+      operator: g.operator,
+      rules: []
     };
     
-    return convertGroup(group);
+    ensureArray(g.children).forEach(child => {
+      if (isRuleGroup(child)) {
+        result.rules.push(convertGroup(child));
+      } else {
+        // For conditions, exclude the ID field
+        const { id, ...conditionWithoutId } = child;
+        result.rules.push(conditionWithoutId);
+      }
+    });
+    
+    return result;
   };
+    
+    return convertGroup(group);
+};
 
 
 // JSON Display Component
@@ -77,21 +79,24 @@ export default function ImprovedRuleBuilder() {
     updateFn: (item: RuleGroup) => RuleGroup
   ): Array<Condition | RuleGroup> => {
     return children.map(child => {
+      // Check if the child is a RuleGroup (a group node with its own children)
       if (isRuleGroup(child)) {
         if (child.id === groupId) {
-          // Update this group
-          return updateFn(child);
+          // If this RuleGroup's ID matches the groupId, apply the update function to it
+          return updateFn(child);  // This returns the updated RuleGroup
         } else {
-          // Recurse into its children
+          // If not, we recursively check the children of this RuleGroup
           return {
-            ...child,
-            children: updateTree(ensureArray(child.children), groupId, updateFn)
+            ...child,  // Return the current RuleGroup but with updated children
+            children: updateTree(ensureArray(child.children), groupId, updateFn)  // Recurse into children
           };
         }
       }
-      // It's a condition, return as is
+    
+      // If the child is not a RuleGroup (i.e., it's a Condition), return it as is
       return child;
     });
+    
   };
 
   const generateRule = () => {
@@ -103,12 +108,14 @@ export default function ImprovedRuleBuilder() {
   const generateId = () => Math.random().toString(36).substring(2, 9);
 
   const addCondition = (parentId: string) => {
+    console.log('Adding condition to parent:', parentId);
     const newCondition: Condition = {
       id: generateId(),
-      category: 'Hire Cash',
+      category: 'Hire cash Value',
       operand: 'MRP',
       operator: 'EQUALS',
       rules:'Load ON MRP',
+      operator2: 'Add',
       value: ''
     };
     
@@ -127,6 +134,8 @@ export default function ImprovedRuleBuilder() {
       }));
     }
   };
+
+  
 
   const addGroup = (parentId: string) => {
     const newGroup: RuleGroup = {
@@ -150,6 +159,8 @@ export default function ImprovedRuleBuilder() {
       }));
     }
   };
+
+
 
   const updateCondition = (conditionId: string, updatedCondition: Partial<Condition>) => {
     const updateConditionInChildren = (children: Array<Condition | RuleGroup>): Array<Condition | RuleGroup> => {

@@ -1,7 +1,8 @@
-import { RuleGroup,Condition,RuleElement } from "../types/interfaces";
-import ConditionComponent from "./condition";
+import { RuleGroup } from "../types/interfaces";
+import { Condition } from "../components/condition";
+import ConditionRow from "./condition";
 import { useState } from "react";
-import { ChevronDown, ChevronRight, Plus } from "lucide-react";
+import { ChevronDown, ChevronRight, Plus, Trash2 } from "lucide-react";
 import { ensureArray, isRuleGroup } from '../types/interfaces'; // Adjust the path to match your project structure
 
 // Rule Group Component
@@ -24,6 +25,18 @@ const RuleGroupComponent = ({
 }) => {
   const [collapsed, setCollapsed] = useState(false);
   const children = ensureArray(group.children);
+
+  const [conditions, setConditions] = useState<Condition[]>([]);
+
+  const handleUpdate = (id: string, update: Partial<Condition>) => {
+    setConditions(prev => prev.map(cond => 
+      cond.id === id ? { ...cond, ...update } : cond
+    ));
+  };
+
+  const handleDelete = (id: string) => {
+    setConditions(prev => prev.filter(cond => cond.id !== id));
+  };
   
   return (
     <div className={`rule-group p-3 rounded-lg ${level > 0 ? 'border border-blue-200 bg-blue-50' : ''}`}>
@@ -61,7 +74,7 @@ const RuleGroupComponent = ({
                 <div key={child.id} className="rule-item">
                   {isRuleGroup(child) ? (
                     <RuleGroupComponent
-                      group={child}
+                      group={child as RuleGroup}
                       onAddCondition={onAddCondition}
                       onAddGroup={onAddGroup}
                       onUpdateCondition={onUpdateCondition}
@@ -70,10 +83,12 @@ const RuleGroupComponent = ({
                       level={level + 1}
                     />
                   ) : (
-                    <ConditionComponent
-                      condition={child}
+                    // Render individual condition directly
+                    <ConditionRow
+                      key={child.id}
+                      condition={child as Condition}
                       onUpdate={onUpdateCondition}
-                      onDelete={onDeleteChild ? (childId) => onDeleteChild(group.id, childId) : undefined}
+                      onDelete={(id) => onDeleteChild && onDeleteChild(group.id, id)}
                     />
                   )}
                 </div>
@@ -100,6 +115,16 @@ const RuleGroupComponent = ({
               <Plus size={16} />
               Add Group
             </button>
+              {/* Delete Button */}
+              {onDeleteChild && group.children?.map((child) => (
+              <button 
+                key={child.id} 
+                className="p-1 text-red-500 hover:bg-red-50 rounded-md" 
+                onClick={() => onDeleteChild(group.id, child.id)}
+              >
+                <Trash2 size={18} />
+              </button>
+            ))}
           </div>
         </>
       )}

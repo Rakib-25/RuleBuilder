@@ -1,4 +1,5 @@
-import { RuleGroup,Condition } from '../types/interfaces';
+import { RuleGroup } from '../types/interfaces';
+import { Condition } from '../components/condition';
 
 export const generateRuleStructure = (group: RuleGroup): string[] => {
   const result: string[] = [];
@@ -19,7 +20,7 @@ export const generateRuleStructure = (group: RuleGroup): string[] => {
         condition.category,
         condition.operand,
         condition.operator,
-        condition.value
+        condition.value ?? ''
       );
     }
   };

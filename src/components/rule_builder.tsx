@@ -41,14 +41,15 @@ const updateTree = (
   const addCondition = (parentId: string) => {
     // Logic to add new condition
     setRootGroup(prev => {
-        const newCondition: Condition = {
-          id: uuidv4(),
-          category: 'Patient',
-          operand: 'PatientName',
-          operator: 'EQUALS',
-          rules:'load on MRP',
-          value: ''
-        };
+      const newCondition: Condition = {
+        id: uuidv4(),
+        category: 'Hire cash Value',
+        operand: 'MRP',
+        operator: 'EQUALS',
+        rules:'Load ON MRP',
+        operator2: 'Add',
+        value: ''
+      };
   
         return {
           ...prev,

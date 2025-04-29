@@ -1,11 +1,13 @@
-type Condition = {
-    id: string;
-    category: string;
-    operand: string;
-    operator: string;
-    rules:string;
-    value: string;
-  };
+// type Condition = {
+//     id: string;
+//     category: string;
+//     operand: string;
+//     operator: string;
+//     rules:string;
+//     value: string;
+//   };
+
+import {Condition} from '../components/condition';
   
   type RuleGroup = {
     id: string;
